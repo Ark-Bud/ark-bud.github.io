@@ -122,7 +122,6 @@
         <header class="section-head">
           <p class="eyebrow">Kontakt</p>
           <h2>Skontaktuj się z nami</h2>
-          <p class="note">Uwaga dla właściciela: uzupełnij dane w nawiasach kwadratowych.</p>
         </header>
         <div class="grid grid-3">
           <div class="contact">
@@ -135,9 +134,19 @@
           </div>
           <div class="contact">
             <h3>Obszar działania</h3>
-            <p><span class="placeholder">[MIASTO/REGION]</span></p>
+            <p>Województwo dolnośląskie</p>
           </div>
         </div>
+        <form class="contact-form" action="https://formsubmit.co/arkbudremonty@gmail.com" method="POST">
+          <h3>Napisz do nas</h3>
+          <input type="hidden" name="_subject" value="Nowa wiadomość ze strony arkbud">
+          <input type="hidden" name="_captcha" value="true">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <label>Imię i nazwisko<input type="text" name="name" required></label>
+          <label>Telefon lub e-mail<input type="text" name="contact" required></label>
+          <label>Wiadomość<textarea name="message" rows="5" required></textarea></label>
+          <button type="submit" class="btn">Wyślij wiadomość</button>
+        </form>
       </div>
     </section>
   </main>
