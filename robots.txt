@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ark-bud.github.io/arkbud/sitemap.xml
