@@ -147,7 +147,10 @@
           <input type="hidden" name="_captcha" value="true">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <label>Imię i nazwisko<input type="text" name="name" required></label>
-          <label>Telefon lub e-mail<input type="text" name="contact" required></label>
+          <label>E-mail<input type="email" name="email" autocomplete="email"></label>
+          <label>Telefon<input type="tel" name="phone" autocomplete="tel" placeholder="np. 722 162 861"></label>
+          <p class="form-hint">Podaj e-mail lub telefon (najlepiej oba).</p>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
           <label>Wiadomość<textarea name="message" rows="5" required></textarea></label>
           <button type="submit" class="btn">Wyślij wiadomość</button>
         </form>
@@ -160,5 +163,38 @@
       <p>© 2026 Ark-Dom Dolny Śląsk</p>
     </div>
   </footer>
+  <script>
+  (function(){
+    var f=document.querySelector('.contact-form'); if(!f) return;
+    var err=document.getElementById('form-error'), btn=f.querySelector('button');
+    function show(m){err.textContent=m;err.hidden=false;}
+    function phoneOk(v){var d=v.replace(/[\s().-]/g,'');
+      if(/^(\+48|0048)?[1-9]\d{8}$/.test(d)) return true;
+      return /^\+[1-9]\d{7,14}$/.test(d);}
+    function mxOk(email){
+      var dom=email.split('@')[1];
+      return fetch('https://cloudflare-dns.com/dns-query?name='+encodeURIComponent(dom)+'&type=MX',{headers:{accept:'application/dns-json'}})
+        .then(function(r){return r.json();})
+        .then(function(j){return j.Status===0&&j.Answer&&j.Answer.some(function(a){return a.type===15;});})
+        .catch(function(){return true;});
+    }
+    f.addEventListener('submit',function(e){
+      if(f.dataset.ok==='1') return;
+      e.preventDefault(); err.hidden=true;
+      var em=f.email.value.trim(), ph=f.phone.value.trim();
+      if(!em&&!ph) return show('Podaj adres e-mail lub numer telefonu.');
+      if(ph&&!phoneOk(ph)) return show('Numer telefonu wygląda niepoprawnie. Podaj 9 cyfr, np. 722 162 861.');
+      var go=function(){f.dataset.ok='1';f.submit();};
+      btn.disabled=true;
+      if(em){
+        mxOk(em).then(function(ok){
+          btn.disabled=false;
+          if(!ok) return show('Nie znaleziono takiego adresu e-mail (domena nie odbiera poczty). Sprawdź pisownię.');
+          go();
+        });
+      } else {btn.disabled=false;go();}
+    });
+  })();
+  </script>
 </body>
 </html>

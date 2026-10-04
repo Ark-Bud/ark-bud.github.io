@@ -113,3 +113,4 @@ h3{margin:0 0 .5rem;font-size:1.15rem}
 .contact-form label{display:grid;gap:.35rem;font-weight:600}
 .contact-form input[type=text],.contact-form textarea{font:inherit;padding:.7rem .8rem;border:1px solid #cbd5e1;border-radius:8px}
 .contact-form button{cursor:pointer;border:0;justify-self:start}
+.form-hint{margin:0;color:#64748b;font-size:.9rem}.form-error{margin:0;color:#b91c1c;font-weight:600}.contact-form input[type=email],.contact-form input[type=tel]{font:inherit;padding:.7rem .8rem;border:1px solid #cbd5e1;border-radius:8px}
